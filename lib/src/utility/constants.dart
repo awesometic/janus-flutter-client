@@ -10,11 +10,26 @@ class RouteConstant {
   static const String register = "/register";
 }
 
+// Each item indicates the endpoint of the APIs
+// For example, `users` is the endpoint of the `/users/*` API
+enum RestApiComponentType {
+  users,
+  departments,
+  permissions,
+  places,
+  beacons,
+  entrances,
+}
+
 class RestApiConstant {
   static const String serverUrl = "http://localhost:3000";
 
-  static const String users = "/users";
-  static const String register = users + "/create";
-  static const String remove = users + "/remove";
-  static const String login = users + "/auth/sign-in";
+  // Basic CRUD APIs for each component excepts 'read'
+  static const String create = "/create";
+  static const String update = "/update";
+  static const String remove = "/remove";
+
+  // Users specific APIs
+  static const String userLogin = "/users/auth/sign-in";
+  static const String emailVerification = "/users/auth/email-verification";
 }

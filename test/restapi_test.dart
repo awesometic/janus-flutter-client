@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:janus/src/repository/provider/restapi_provider.dart';
+import 'package:janus/src/utility/constants.dart';
 
 void main() {
   var restApiProvider = RestApiProvider();
@@ -7,17 +8,20 @@ void main() {
   String email = 'test@test.com';
   String password = '!@#\$%^&*';
 
-  group('Register', () {
+  group('Users Basic CRUD functions', () {
     setUp(() async {
-      await restApiProvider.remove(email: email, password: password);
+      await restApiProvider.remove(
+          type: RestApiComponentType.users, email: email, password: password);
     });
 
     tearDown(() async {
-      await restApiProvider.remove(email: email, password: password);
+      await restApiProvider.remove(
+          type: RestApiComponentType.users, email: email, password: password);
     });
 
     test('should success to register an account', () async {
-      final results = await restApiProvider.register(
+      final results = await restApiProvider.create(
+        type: RestApiComponentType.users,
         name: name,
         email: email,
         password: password,
@@ -29,12 +33,16 @@ void main() {
 
   group('Login', () {
     setUp(() async {
-      await restApiProvider.register(
-          name: name, email: email, password: password);
+      await restApiProvider.create(
+          type: RestApiComponentType.users,
+          name: name,
+          email: email,
+          password: password);
     });
 
     tearDown(() async {
-      await restApiProvider.remove(email: email, password: password);
+      await restApiProvider.remove(
+          type: RestApiComponentType.users, email: email, password: password);
     });
 
     test('should success to login the RestApi server', () async {
